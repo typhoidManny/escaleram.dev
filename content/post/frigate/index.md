@@ -107,5 +107,24 @@ In order to prevent camera streams from reaching Tapo servers, you must configur
 
 **This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.**
 
+<div style="text-align: center">
+
+### Object Detection
+
+</div>
+
+In my opinion Object detection is the coolest feature has to offer as an open-source NVR. In order to use object detection you must also configure motion detection.
+
+The quality of your object detections is going to be dependent on a few key parameters:
+
+    - Model Choice
+    - Input Resolution
+    - Variant Size (if using YOLOv9 models)
+
+I am using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.
+
+320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
+
+
 
 
