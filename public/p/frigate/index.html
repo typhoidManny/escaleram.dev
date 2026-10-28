@@ -233,6 +233,7 @@
       <ol>
         <li><a href="#pc-environment">PC Environment</a></li>
         <li><a href="#cameras-1">Cameras</a></li>
+        <li><a href="#object-detection">Object Detection</a></li>
       </ol>
     </li>
   </ol>
@@ -353,6 +354,7 @@
       <ol>
         <li><a href="#pc-environment">PC Environment</a></li>
         <li><a href="#cameras-1">Cameras</a></li>
+        <li><a href="#object-detection">Object Detection</a></li>
       </ol>
     </li>
   </ol>
@@ -420,6 +422,17 @@
 <p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate.</p>
 <p><img alt="Gateway Configuration" class="gallery-image" data-flex-basis="110px" data-flex-grow="46" height="3120" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/Gateway.jpg" srcset="/p/frigate/Gateway_hu_9834475944033db6.jpg 800w, /p/frigate/Gateway.jpg 1440w" width="1440"></p>
 <p><strong>This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.</strong></p>
+<div style="text-align: center">
+<h3 id="object-detection">Object Detection
+</h3></div>
+<p>In my opinion Object detection is the coolest feature has to offer as an open-source NVR. In order to use object detection you must also configure motion detection.</p>
+<p>The quality of your object detections is going to be dependent on a few key parameters:</p>
+<pre><code>- Model Choice
+- Input Resolution
+- Variant Size (if using YOLOv9 models)
+</code></pre>
+<p>I am using the <em>small</em> variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.</p>
+<p>320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.</p>
 
 </section>
 
@@ -433,18 +446,6 @@
     </section>
 
 
-    
-    <section class="article-copyright inline-meta">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
     </footer>
 
 
@@ -465,12 +466,12 @@
     <a href="/p/hello-world/">
         
         <div class="article-image">
-            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/cover_hu_7db3da8a0154896c.jpg" srcset="/p/hello-world/cover_hu_7db3da8a0154896c.jpg 1x, /p/hello-world/cover_hu_f16f0573d2543839.jpg 2x" width="250">
+            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg" srcset="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg 1x, /p/hello-world/ecoli_hu_cc49e694064416b1.jpg 2x" width="250">
 
         </div>
         
 
-        <div class="article-details"style="background: linear-gradient(0deg, #679ddc80 0%, #bbbadcC0 100%);">
+        <div class="article-details"style="background: linear-gradient(0deg, #d6b4a780 0%, #0d0704C0 100%);">
             <h2 class="article-title">Hello World!</h2>
         </div>
     </a>

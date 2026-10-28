@@ -3,7 +3,7 @@ title: Hello World!
 description: This page is still under construction
 slug: hello-world
 date: 2026-10-24 21:12:00+0000
-image: cover.jpg
+image: ecoli.jpg
 categories:
     - Post
 tags:
