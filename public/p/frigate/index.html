@@ -223,7 +223,18 @@
                 
   <ol>
     <li><a href="#intro">Intro</a></li>
-    <li><a href="#hardware">Hardware</a></li>
+    <li><a href="#hardware">Hardware</a>
+      <ol>
+        <li><a href="#cameras">Cameras</a></li>
+        <li><a href="#pc-hardware">PC Hardware</a></li>
+      </ol>
+    </li>
+    <li><a href="#software">Software</a>
+      <ol>
+        <li><a href="#pc-environment">PC Environment</a></li>
+        <li><a href="#cameras-1">Cameras</a></li>
+      </ol>
+    </li>
   </ol>
 
             </nav>
@@ -304,7 +315,7 @@
 
 
                     <time class="article-time--reading">
-                        2 minutes read
+                        3 minutes read
                     </time>
                 
             </div>
@@ -332,7 +343,18 @@
                 
   <ol>
     <li><a href="#intro">Intro</a></li>
-    <li><a href="#hardware">Hardware</a></li>
+    <li><a href="#hardware">Hardware</a>
+      <ol>
+        <li><a href="#cameras">Cameras</a></li>
+        <li><a href="#pc-hardware">PC Hardware</a></li>
+      </ol>
+    </li>
+    <li><a href="#software">Software</a>
+      <ol>
+        <li><a href="#pc-environment">PC Environment</a></li>
+        <li><a href="#cameras-1">Cameras</a></li>
+      </ol>
+    </li>
   </ol>
 
             </nav>
@@ -351,25 +373,52 @@
     </blockquote>
 </div>
 <h2 id="intro">Intro
-</h2><p>I&rsquo;ve got some concerns with how Big Tech is handling sensitive data. I won&rsquo;t get into that topic today, but it made me think twice when I thought about getting a home surveillance system to spy on my cat (named Fish).</p>
-<p>Luckily, after a bit of research I found <a class="link" href="https://frigate.video/"  target="_blank" rel="noopener"
-    >Frigate NVR</a>. It happened to check all of my boxes and even came with a lot more features to play around with.</p>
-<p>Below I will provide some guidance and show you how I configured Frigate with object detection, face recognition, and more on afforadable hardware!</p>
+</h2><p>I&rsquo;ve got some concerns with how Big Tech is handling sensitive data.</p>
+<p>I won&rsquo;t get into that topic today, but it made me think twice when I thought about getting a home surveillance system to spy on my cat (named Fish).</p>
+<p>After a bit of research I found <a class="link" href="https://frigate.video/"  target="_blank" rel="noopener"
+    >Frigate NVR</a> which addressed all my concerns. It also came with some pretty powerful features to play with.</p>
+<p>Below I talk about how I configured Frigate with object detection, face recognition, and more on afforadable hardware! Follow along if your trying to breakup with Big Tech too&hellip;</p>
 <h2 id="hardware">Hardware
 </h2><div style="text-align: center">
+<h3 id="cameras">Cameras
+</h3></div>
+<div style="text-align: center">
 <p>Prices below as of 2026:</p>
 </div>
 <pre><code>- 4x Tapo C101 (Used on Amazon - $50)
 - 2x Tapo C217 (Amazon - $60)
-- Google Coral TPU USB Accelerator (Amazon - ~$100)
 </code></pre>
 <p>Im using the C101 camera model indoors and the C217 outdoors.</p>
-<p>Both of these models support RTSP; the C217 also supports pan/tilt features over ONVIF.</p>
-<p><strong>NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers.</strong> To receive RTSP you must first create a TP-Link account to boot the cameras, then create an RTSP stream account for each camera. From there, configure a static IP for each camera. In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up in your chosen NVR.</p>
-<p>You will also want a mid-range PC, ideally with a dedicated GPU. My GPU is an NVIDIA GeForce RTX 2060 purchased nearly 10 years ago. This can be used to run the lightweight object detection models if you do not have a TPU coprocessor.</p>
+<p>Both of these models support RTSP; the C217 also supports pan/tilt features over ONVIF.
+<br></br></p>
+<div style="text-align: center">
+<h3 id="pc-hardware">PC Hardware
+</h3></div>
+<p>You will want a mid-range PC or a Raspberry Pi to run Frigate.</p>
+<p>I recommend an EdgeTPU if you plan to run object detection. If you dont have one but want to test out detection, you could also configure a dedicated GPU to run a lightweight model.</p>
+<p>I&rsquo;m using the Google Coral TPU USB Accelerator (Amazon - ~$100) to run my object detection. This is only one option of many. See <a class="link" href="https://docs.frigate.video/configuration/object_detectors"  target="_blank" rel="noopener"
+    >Frigate</a> docs for more.</p>
+<p>My GPU is an NVIDIA GeForce RTX 2060 purchased nearly 10 years ago. This can be used to run lightweight object detection models, but im only using it for processing the footage.</p>
 <div style="text-align: center">
 <p>Total cost for cameras and AI Coprocessor: <strong>$210.00</strong></p>
 </div>
+<h2 id="software">Software
+</h2><div style="text-align: center">
+<h3 id="pc-environment">PC Environment
+</h3></div>
+<p>Frigate runs on <a class="link" href="https://docs.docker.com/get-started/docker-overview/"  target="_blank" rel="noopener"
+    >Docker</a>. Some experience will go a long way, but it&rsquo;s doable for a beginner and Frigate has good <a class="link" href="https://docs.frigate.video/frigate/installation/#docker"  target="_blank" rel="noopener"
+    >docs here</a> as well.</p>
+<p>I have yet to try Windows or MacOS. My flavor of Linux is CachyOS.</p>
+<p><img alt="CachyOS" class="gallery-image" data-flex-basis="261px" data-flex-grow="108" height="459" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/cachy.png" width="500"></p>
+<div style="text-align: center">
+<h3 id="cameras-1">Cameras
+</h3></div>
+<p>The Tapo cameras require you to create an account for setup. Upon initial setup, the cameras are configured to stream directly to TP-Links proprietary cloud platform. This is something I wanted to avoid in favor of using RTSP to receive streams locally and preventing the cameras from directly accessing the internet.</p>
+<p><strong>NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers.</strong></p>
+<p>You must first create a TP-Link account to boot the cameras, create an RTSP stream account for each camera, then configure a static IP for each camera.</p>
+<p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate.</p>
+<p><strong>This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.</strong></p>
 
 </section>
 
