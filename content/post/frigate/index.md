@@ -103,6 +103,8 @@ You must first create a TP-Link account to boot the cameras, create an RTSP stre
 
 In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate. 
 
+![Gateway Configuration](./Gateway.jpg)
+
 **This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.**
 
 
