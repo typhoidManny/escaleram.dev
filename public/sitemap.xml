@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/p/frigate/</loc>
+    <loc>https://escaleram.dev/p/frigate/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/hello-world/</loc>
+    <loc>https://escaleram.dev/p/hello-world/</loc>
     <lastmod>2026-10-24T21:12:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://escaleram.dev/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://escaleram.dev/categories/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/post/</loc>
+    <loc>https://escaleram.dev/categories/post/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://escaleram.dev/post/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://escaleram.dev/tags/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/tutorial/</loc>
+    <loc>https://escaleram.dev/tags/tutorial/</loc>
     <lastmod>2026-10-25T15:38:40+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rambles/</loc>
+    <loc>https://escaleram.dev/tags/rambles/</loc>
     <lastmod>2026-10-24T21:12:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/archives/</loc>
+    <loc>https://escaleram.dev/archives/</loc>
     <lastmod>2026-10-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/</loc>
+    <loc>https://escaleram.dev/page/</loc>
     <lastmod>2026-10-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/example-category/</loc>
+    <loc>https://escaleram.dev/categories/example-category/</loc>
   </url><url>
-    <loc>http://localhost:1313/links/</loc>
+    <loc>https://escaleram.dev/links/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://escaleram.dev/search/</loc>
   </url>
 </urlset>

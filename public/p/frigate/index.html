@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="How to setup a local-first Home Surveillance System with AI detection.">
 <title>🔒Private Home Surveillance w/ Frigate🔒</title>
 
 
-<link rel="canonical" href="http://localhost:1313/p/frigate/">
+<link rel="canonical" href="https://escaleram.dev/p/frigate/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
@@ -14,12 +14,12 @@
 
 <link rel="stylesheet" href="/scss/style.min.6c875234350e518395efbf51958523b0852fb2215ab8cb81358f9317153eba2d.css"><meta property='og:title' content="🔒Private Home Surveillance w/ Frigate🔒">
 <meta property='og:description' content="How to setup a local-first Home Surveillance System with AI detection.">
-<meta property='og:url' content='http://localhost:1313/p/frigate/'>
+<meta property='og:url' content='https://escaleram.dev/p/frigate/'>
 <meta property='og:site_name' content='escaleram.dev'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Tutorial' /><meta property='article:published_time' content='2026-10-25T15:38:40&#43;00:00'/><meta property='article:modified_time' content='2026-10-25T15:38:40&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/frigate/frigateScreenshot.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Tutorial' /><meta property='article:published_time' content='2026-10-25T15:38:40&#43;00:00'/><meta property='article:modified_time' content='2026-10-25T15:38:40&#43;00:00'/><meta property='og:image' content='https://escaleram.dev/p/frigate/frigateScreenshot.jpg' />
 <meta name="twitter:title" content="🔒Private Home Surveillance w/ Frigate🔒">
 <meta name="twitter:description" content="How to setup a local-first Home Surveillance System with AI detection."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='http://localhost:1313/p/frigate/frigateScreenshot.jpg' />
+    <meta name="twitter:image" content='https://escaleram.dev/p/frigate/frigateScreenshot.jpg' />
     <link rel="shortcut icon" href="/img/ladder.png" />
 
     </head>
@@ -234,6 +234,7 @@
         <li><a href="#pc-environment">PC Environment</a></li>
         <li><a href="#cameras-1">Cameras</a></li>
         <li><a href="#object-detection">Object Detection</a></li>
+        <li><a href="#semantic-search">Semantic Search</a></li>
       </ol>
     </li>
   </ol>
@@ -324,7 +325,7 @@
 
 
                     <time class="article-time--reading">
-                        3 minutes read
+                        4 minutes read
                     </time>
                 
             </div>
@@ -363,6 +364,7 @@
         <li><a href="#pc-environment">PC Environment</a></li>
         <li><a href="#cameras-1">Cameras</a></li>
         <li><a href="#object-detection">Object Detection</a></li>
+        <li><a href="#semantic-search">Semantic Search</a></li>
       </ol>
     </li>
   </ol>
@@ -391,10 +393,10 @@
     </blockquote>
 </div>
 <h2 id="intro">Intro
-</h2><p>I&rsquo;ve got some concerns with how Big Tech is handling sensitive data.</p>
+</h2><p>I&rsquo;ve don&rsquo;t love handing over my sensitive data to Big Tech.</p>
 <p>I won&rsquo;t get into that topic today, but it made me think twice when I thought about getting a home surveillance system to spy on my cat (named Fish).</p>
 <p>After a bit of research I found <a class="link" href="https://frigate.video/"  target="_blank" rel="noopener"
-    >Frigate NVR</a> which addressed all my concerns. It also came with some pretty powerful features to play with.</p>
+    >Frigate NVR</a> which addressed all my concerns and came with some pretty powerful features to play with.</p>
 <p>Below I talk about how I configured Frigate with object detection, face recognition, and more on afforadable hardware! Follow along if your trying to breakup with Big Tech too&hellip;</p>
 <h2 id="hardware">Hardware
 </h2><div style="text-align: center">
@@ -438,10 +440,13 @@
 <p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate.</p>
 <p><img alt="Gateway Configuration" class="gallery-image" data-flex-basis="110px" data-flex-grow="46" height="3120" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/Gateway.jpg" srcset="/p/frigate/Gateway_hu_9834475944033db6.jpg 800w, /p/frigate/Gateway.jpg 1440w" width="1440"></p>
 <p><strong>This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.</strong></p>
+<p>Now you have camera streams over WiFi, and the data never leaves your network!</p>
 <div style="text-align: center">
 <h3 id="object-detection">Object Detection
 </h3></div>
-<p>In my opinion Object detection is the coolest feature has to offer as an open-source NVR. In order to use object detection you must also configure motion detection.</p>
+<div style="text-align: center">
+<p><strong>Note:</strong> In order to use object detection you must also configure motion detection.</p>
+</div>
 <p>The quality of your object detections is going to be dependent on a few key parameters:</p>
 <pre><code>- Model Choice
 - Input Resolution
@@ -449,6 +454,13 @@
 </code></pre>
 <p>I am using the <em>small</em> variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.</p>
 <p>320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.</p>
+<p>Once you&rsquo;ve configured motion detection and object detection, Frigate will start handing over detections to review.</p>
+<p>The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.</p>
+<h3 id="semantic-search">Semantic Search
+</h3><p>One of the coolest features available on Frigate is Semantic Search.</p>
+<p>This feature takes object detections and runs them through another Local AI model (from Jina AI) which gives the images <em>embeddings</em>. These <em>embeddings</em> provide text descriptions of the image to group relevant images together.</p>
+<p>From there, you can search through your database of detections based on the <em>embeddings</em>&hellip;</p>
+<p>For example, here I search my detection database for the term &ldquo;white shirt&rdquo;:</p>
 <div style="text-align: center">
 <h1 id="this-post-is-still-under-construction">THIS POST IS STILL UNDER CONSTRUCTION
 </h1></div>
@@ -487,7 +499,7 @@
     <a href="/p/hello-world/">
         
         <div class="article-image">
-            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/ecoli_hu_4ad06914e2c58cf3.jpg" srcset="/p/hello-world/ecoli_hu_4ad06914e2c58cf3.jpg 1x, /p/hello-world/ecoli_hu_dbd01e312984049f.jpg 2x" width="250">
+            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg" srcset="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg 1x, /p/hello-world/ecoli_hu_cc49e694064416b1.jpg 2x" width="250">
 
         </div>
         
@@ -600,7 +612,7 @@
             </main>
         </div>
         
-<script type="text/javascript" src="/ts/main.4a5a621c399fbf5257975c725d9c222f5fcea3c68fc7e511af01e32174186d31.js" defer></script>
+<script type="text/javascript" src="/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
 
 
     </body>

@@ -25,11 +25,11 @@ toc: true
 
 ## Intro
 
-I've got some concerns with how Big Tech is handling sensitive data. 
+I've don't love handing over my sensitive data to Big Tech. 
 
 I won't get into that topic today, but it made me think twice when I thought about getting a home surveillance system to spy on my cat (named Fish).
 
-After a bit of research I found [Frigate NVR](https://frigate.video/) which addressed all my concerns. It also came with some pretty powerful features to play with.
+After a bit of research I found [Frigate NVR](https://frigate.video/) which addressed all my concerns and came with some pretty powerful features to play with.
 
 Below I talk about how I configured Frigate with object detection, face recognition, and more on afforadable hardware! Follow along if your trying to breakup with Big Tech too...
 
@@ -107,13 +107,19 @@ In order to prevent camera streams from reaching Tapo servers, you must configur
 
 **This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.**
 
+Now you have camera streams over WiFi, and the data never leaves your network!
+
 <div style="text-align: center">
 
 ### Object Detection
 
 </div>
 
-In my opinion Object detection is the coolest feature has to offer as an open-source NVR. In order to use object detection you must also configure motion detection.
+<div style="text-align: center">
+
+**Note:** In order to use object detection you must also configure motion detection.
+
+</div>
 
 The quality of your object detections is going to be dependent on a few key parameters:
 
@@ -124,6 +130,22 @@ The quality of your object detections is going to be dependent on a few key para
 I am using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.
 
 320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
+
+Once you've configured motion detection and object detection, Frigate will start handing over detections to review.
+
+The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.
+
+### Semantic Search
+
+One of the coolest features available on Frigate is Semantic Search.
+
+This feature takes object detections and runs them through another Local AI model (from Jina AI) which gives the images *embeddings*. These *embeddings* provide text descriptions of the image to group relevant images together.
+
+From there, you can search through your database of detections based on the *embeddings*...
+
+For example, here I search my detection database for the term "white shirt":
+
+
 
 <div style="text-align: center">
 
