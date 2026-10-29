@@ -2,10 +2,10 @@
 mainSections = ["post"]
 # Output page's full content in RSS.
 rssFullContent = true
-favicon = "img/favicon.png"
+favicon = "img/ladder.png"
     enabled = true
     local = true
-    src = "img/favicon.png"
+    src = "img/ladder.png"
 
 # Accepted values: "default", "lastmod"
 # default = see https://gohugo.io/quick-reference/glossary/#default-sort-order
@@ -23,10 +23,10 @@ SortBy              = "default"
 [sidebar]
     emoji    = "💻"
     subtitle = "Microbiology Instrumentation Specialist | CS Student"
-    avatar   = "img/avatar.png"
+    avatar   = "img/escaleram.png"
         enabled = true
         local = true
-        src = "img/avatar.png"
+        src = "img/escaleram.png"
 
 [article]
     headingAnchor = false

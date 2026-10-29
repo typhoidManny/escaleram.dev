@@ -125,6 +125,14 @@ I am using the *small* variant of YOLOv9 with an input resolution of 320x320. Yo
 
 320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
 
+<div style="text-align: center">
 
+# THIS POST IS STILL UNDER CONSTRUCTION
 
+</div>
 
+<div style="text-align: center">
+
+### COME BACK SOON!
+
+</div>
