@@ -145,7 +145,9 @@ From there, you can search through your database of detections based on the *emb
 
 For example, here I search my detection database for the term "white shirt":
 
+![Semantic Search](./SemanticSearch.jpg)
 
+Just think of the possibilities!
 
 <div style="text-align: center">
 
