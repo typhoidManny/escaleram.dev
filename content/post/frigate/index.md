@@ -1,8 +1,8 @@
 ---
-title: 🔒Private Home Surveillance w/ Frigate🔒
-description: How to setup a local-first Home Surveillance System with AI detection.
+title: Private Home Surveillance
+description: Local AI Surveillance with Frigate.
 slug: frigate
-date: 2026-10-25 15:38:40+0000
+date: 2026-10-29 15:38:40+0000
 image: frigateScreenshot.jpg
 categories:
     - Post
