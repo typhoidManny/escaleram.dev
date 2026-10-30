@@ -149,14 +149,24 @@ For example, here I search my detection database for the term "white shirt":
 
 Just think of the possibilities!
 
+### Face Recognition
+
+Setting up facial recognition is very intuitive. Simply add some clear images of the subjects face and Frigate will start classifying people detected with sub_labels based on their face.
+
+You can also train these facial detections easily and directly in the user interface. It is crucial you train based on a set of high quality images with diverse lighting, orientation, etc.
+
+Training on a poor dataset will quickly degrade the quality of your classifications.
+
+You also want to avoid training on images that were already classified with a relatively high score. This could lead to overfitting.
+
+## Outro
+
+So that's a brief write-up on how I'm using Frigate. There are still plenty of features I want to try out (object states, zones, license plate recognition, and more).
+
+If I get the sense enough people care I may end up creating a full tutorial and sharing my anonymized configuration file and Docker Compose file.
+
 <div style="text-align: center">
 
-# THIS POST IS STILL UNDER CONSTRUCTION
-
-</div>
-
-<div style="text-align: center">
-
-### COME BACK SOON!
+*'til next time!*
 
 </div>
