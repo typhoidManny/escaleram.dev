@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Microbiology Instrumentation Specialist | CS Student">
 <title>Posts</title>
 
 
-<link rel="canonical" href="https://escaleram.dev/post/">
+<link rel="canonical" href="http://localhost:1313/post/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
@@ -14,11 +14,11 @@
 
 <link rel="stylesheet" href="/scss/style.min.6c875234350e518395efbf51958523b0852fb2215ab8cb81358f9317153eba2d.css"><meta property='og:title' content="Posts">
 <meta property='og:description' content="Microbiology Instrumentation Specialist | CS Student">
-<meta property='og:url' content='https://escaleram.dev/post/'>
+<meta property='og:url' content='http://localhost:1313/post/'>
 <meta property='og:site_name' content='escaleram.dev'>
 <meta property='og:type' content='website'><meta property='og:updated_time' content=' 2026-10-29T15:38:40&#43;00:00 '/>
 <meta name="twitter:title" content="Posts">
-<meta name="twitter:description" content="Microbiology Instrumentation Specialist | CS Student"><link rel="alternate" type="application/rss&#43;xml" href="https://escaleram.dev/post/index.xml">
+<meta name="twitter:description" content="Microbiology Instrumentation Specialist | CS Student"><link rel="alternate" type="application/rss&#43;xml" href="http://localhost:1313/post/index.xml">
     <link rel="shortcut icon" href="/img/ladder.png" />
 
     </head>
@@ -55,7 +55,7 @@
     <header>
         <figure class="site-avatar">
                 <a href="/">
-                    <img src="/img/escaleram.png" 
+                    <img src="/img/escaleram.png"
                         width="400"
                         height="400"
                         class="site-logo"
@@ -67,7 +67,7 @@
                 
             </figure>
         
-        
+
         <div class="site-meta">
             <h1 class="site-name"><a href="/">escaleram.dev</a></h1>
             <h2 class="site-description">Microbiology Instrumentation Specialist | CS Student</h2>
@@ -75,7 +75,7 @@
     </header><ol class="menu-social">
             
                 <li>
-                    <a 
+                    <a
                         href='https://github.com/typhoidManny'
                         
                         title="GitHub"
@@ -194,6 +194,378 @@
             </ol>
         </li>
     </ol>
+
+    <div id="cliamp-player-container">
+  <div class="cliamp-window">
+    <div class="cliamp-header">
+      <span class="cliamp-logo">Audio player</span>
+      <span class="cliamp-status" id="player-status">Stopped</span>
+    </div>
+    
+    
+    <div class="cliamp-screen">
+      <canvas id="visualizerCanvas" width="300" height="100"></canvas>
+    </div>
+
+    
+    <div class="cliamp-track-display">
+      <span class="track-label">PLAYING:</span>
+      <span id="track-title">No track loaded...</span>
+    </div>
+
+    
+    <div class="cliamp-playlist">
+      <select id="playlist-select" size="4"></select>
+    </div>
+
+    
+    <div class="cliamp-controls">
+      <button id="prev-btn" title="Previous">|&lt;&lt;</button>
+      <button id="play-btn" title="Play">&gt;</button>
+      <button id="pause-btn" title="Pause">||</button>
+      <button id="next-btn" title="Next">&gt;&gt;|</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  #cliamp-player-container {
+    display: flex;
+    justify-content: center;
+    font-family: var(--base-font-family);
+    margin: 14px 0;
+    width: 100%;
+  }
+  .cliamp-window {
+    background-color: var(--card-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--shadow-l1);
+    width: min(330px, 100%);
+    padding: 12px;
+    color: var(--card-text-color-main);
+  }
+  .cliamp-header {
+    color: var(--card-text-color-main);
+    padding: 0 2px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--card-separator-color);
+  }
+  .cliamp-screen {
+    background-color: var(--body-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: calc(var(--card-border-radius) - 4px);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100px;
+  }
+  .cliamp-track-display {
+    background-color: var(--body-background);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 7px;
+    padding: 7px 8px;
+    font-size: 12px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-label {
+    color: var(--card-text-color-secondary);
+    margin-right: 4px;
+  }
+  .cliamp-playlist select {
+    width: 100%;
+    background-color: var(--body-background);
+    color: var(--card-text-color-main);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 7px;
+    font-family: var(--base-font-family);
+    font-size: 12px;
+    height: 75px;
+    padding: 3px;
+    margin-bottom: 8px;
+  }
+  .cliamp-playlist select option:checked {
+    background-color: var(--card-background-selected);
+    color: var(--card-text-color-main);
+  }
+  .cliamp-controls {
+    display: flex;
+    gap: 6px;
+  }
+  .cliamp-controls button {
+    flex: 1;
+    background-color: var(--card-background-selected);
+    color: var(--card-text-color-main);
+    border: 1px solid var(--card-separator-color);
+    border-radius: 7px;
+    padding: 7px 0;
+    font-family: var(--base-font-family);
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+  .cliamp-controls button:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--accent-color-text);
+  }
+  .cliamp-controls button:active {
+    transform: translateY(1px);
+  }
+</style>
+
+<script>
+  const playlistData = [
+    { title: "Royalty Free Electronica", url: "/assets/audio/track1.mp3" }
+  ];
+
+  const playerStateKey = "cliamp-player-state";
+
+  let audioCtx, analyser, audioSource, sourceNode;
+  let currentIndex = 0;
+  let isInitialized = false;
+
+  const audioEl = new Audio();
+  audioEl.crossOrigin = "anonymous";
+
+  const playBtn = document.getElementById('play-btn');
+  const pauseBtn = document.getElementById('pause-btn');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const playlistSelect = document.getElementById('playlist-select');
+  const trackTitleDisplay = document.getElementById('track-title');
+  const playerStatus = document.getElementById('player-status');
+  const canvas = document.getElementById('visualizerCanvas');
+  const canvasCtx = canvas.getContext('2d');
+
+  playlistData.forEach((track, index) => {
+    const opt = document.createElement('option');
+    opt.value = index;
+    opt.textContent = track.title;
+    playlistSelect.appendChild(opt);
+  });
+
+  function initAudioPipeline() {
+    if (isInitialized) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 64; 
+
+    sourceNode = audioCtx.createMediaElementSource(audioEl);
+    sourceNode.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    isInitialized = true;
+  }
+
+  function loadTrack(index) {
+    currentIndex = index;
+    audioEl.src = playlistData[currentIndex].url;
+    trackTitleDisplay.textContent = playlistData[currentIndex].title;
+    playlistSelect.selectedIndex = currentIndex;
+    savePlayerState();
+  }
+
+  function savePlayerState() {
+    sessionStorage.setItem(playerStateKey, JSON.stringify({
+      index: currentIndex,
+      time: Number.isFinite(audioEl.currentTime) ? audioEl.currentTime : 0,
+      playing: !audioEl.paused
+    }));
+  }
+
+  function startPlayback() {
+    initAudioPipeline();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+
+    audioEl.play().then(() => {
+      playerStatus.textContent = "Playing";
+      savePlayerState();
+      visualize();
+    }).catch(e => {
+      playerStatus.textContent = "Paused";
+      console.log("Playback error:", e);
+    });
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (!audioEl.src) loadTrack(currentIndex);
+    startPlayback();
+  });
+
+  pauseBtn.addEventListener('click', () => {
+    audioEl.pause();
+    playerStatus.textContent = "Paused";
+    savePlayerState();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % playlistData.length;
+    loadTrack(currentIndex);
+    startPlayback();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + playlistData.length) % playlistData.length;
+    loadTrack(currentIndex);
+    startPlayback();
+  });
+
+  playlistSelect.addEventListener('change', (e) => {
+    loadTrack(parseInt(e.target.value));
+    startPlayback();
+  });
+
+  audioEl.addEventListener('ended', () => {
+    nextBtn.click();
+  });
+
+  let savedState = null;
+  try {
+    savedState = JSON.parse(sessionStorage.getItem(playerStateKey));
+  } catch (_) {}
+
+  loadTrack(savedState && Number.isInteger(savedState.index)
+    ? Math.max(0, Math.min(savedState.index, playlistData.length - 1))
+    : 0);
+
+  audioEl.addEventListener("loadedmetadata", () => {
+    if (savedState && Number.isFinite(savedState.time)) {
+      audioEl.currentTime = Math.min(savedState.time, audioEl.duration || savedState.time);
+    }
+    if (savedState && savedState.playing) startPlayback();
+  });
+
+  audioEl.addEventListener("timeupdate", savePlayerState);
+  audioEl.addEventListener("play", savePlayerState);
+  audioEl.addEventListener("pause", savePlayerState);
+  window.addEventListener("beforeunload", savePlayerState);
+
+  function visualize() {
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      const styles = getComputedStyle(document.documentElement);
+      canvasCtx.fillStyle = styles.getPropertyValue('--body-background').trim();
+      canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+      const barColor = styles.getPropertyValue('--accent-color').trim();
+
+      let barWidth = (canvas.width / bufferLength) * 1.8;
+      let barHeight;
+      let x = 2;
+
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = (dataArray[i] / 255) * canvas.height;
+
+        canvasCtx.fillStyle = barColor;
+        canvasCtx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
+
+        x += barWidth + 1;
+      }
+    }
+    draw();
+  }
+</script>
+
+
+    <script>
+        (() => {
+            const shouldHandle = (anchor) => {
+                if (!anchor || anchor.target === "_blank" || anchor.hasAttribute("download")) return false;
+                if (anchor.origin !== window.location.origin) return false;
+                const url = new URL(anchor.href);
+                return url.pathname !== window.location.pathname || url.search !== window.location.search;
+            };
+
+            const replacePage = async (url, push = true) => {
+                const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+                if (!response.ok) throw new Error(`Navigation failed: ${response.status}`);
+
+                const html = await response.text();
+                const parsed = new DOMParser().parseFromString(html, "text/html");
+                const currentMain = document.querySelector("main.main");
+                const nextMain = parsed.querySelector("main.main");
+                if (!currentMain || !nextMain) {
+                    window.location.assign(url);
+                    return;
+                }
+
+                const nextMainClone = nextMain.cloneNode(true);
+                const pageScripts = Array.from(nextMainClone.querySelectorAll("script")).map((oldScript) => {
+                    const script = document.createElement("script");
+                    for (const attribute of oldScript.attributes) {
+                        script.setAttribute(attribute.name, attribute.value);
+                    }
+                    script.textContent = oldScript.textContent;
+                    oldScript.remove();
+                    return script;
+                });
+
+                currentMain.replaceWith(nextMainClone);
+                pageScripts.forEach((script) => document.body.appendChild(script));
+                document.body.className = parsed.body.className;
+                document.documentElement.lang = parsed.documentElement.lang || document.documentElement.lang;
+                document.documentElement.dir = parsed.documentElement.dir || document.documentElement.dir;
+
+                const currentContainer = document.querySelector(".main-container");
+                const nextContainer = parsed.querySelector(".main-container");
+                if (currentContainer && nextContainer) {
+                    currentContainer.className = nextContainer.className;
+                }
+
+                const currentRight = document.querySelector(".right-sidebar");
+                const nextRight = parsed.querySelector(".right-sidebar");
+                if (nextRight && currentRight) {
+                    currentRight.replaceWith(nextRight.cloneNode(true));
+                } else if (!nextRight && currentRight) {
+                    currentRight.remove();
+                }
+
+                document.title = parsed.title;
+                if (push) history.pushState({}, "", url);
+                window.scrollTo({ top: 0, behavior: "auto" });
+
+                document.querySelectorAll("#main-menu a").forEach((link) => {
+                    const item = link.closest("li");
+                    if (item) item.classList.toggle("current", new URL(link.href).pathname === new URL(url).pathname);
+                });
+
+                if (window.Stack && typeof window.Stack.init === "function") {
+                    window.Stack.init();
+                }
+                window.dispatchEvent(new Event("persistent-navigation"));
+            };
+
+            document.addEventListener("click", (event) => {
+                const anchor = event.target.closest("a");
+                if (!anchor || event.defaultPrevented || event.button !== 0 ||
+                    event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+                    !shouldHandle(anchor)) return;
+
+                event.preventDefault();
+                replacePage(anchor.href).catch(() => window.location.assign(anchor.href));
+            });
+
+            window.addEventListener("popstate", () => {
+                replacePage(window.location.href, false).catch(() => window.location.reload());
+            });
+        })();
+    </script>
 </aside>
 
     <aside class="sidebar right-sidebar sticky">
@@ -391,7 +763,7 @@
             </main>
         </div>
         
-<script type="text/javascript" src="/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
+<script type="text/javascript" src="/ts/main.4029ad5778b1230000c7479f5bf5fd557613ac9a850df8acb3fac48cb334ed36.js" defer></script>
 
 
     </body>
