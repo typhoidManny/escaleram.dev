@@ -17,4 +17,4 @@ I put this site together using [Hugo](https://gohugo.io/) and I'm hosting it on 
 
 Want a site like this? Check out [hugo-theme-stack-stater](https://github.com/CaiJimmy/hugo-theme-stack-starter)
 
-> Photo by [Pawel Czerwinski](https://unsplash.com/@pawel_czerwinski) on [Unsplash](https://unsplash.com/)
+> Photo by Eric Erbe, digital colorization by Christopher Pooley, both of USDA, ARS, EMU. - This image was released by the Agricultural Research Service, the research agency of the United States Department of Agriculture, with the ID K11077-1.
