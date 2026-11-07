@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="">
 <title>Search</title>
 
 
-<link rel="canonical" href="http://localhost:1313/search/">
+<link rel="canonical" href="https://escaleram.dev/search/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
@@ -14,11 +14,11 @@
 
 <link rel="stylesheet" href="/scss/style.min.6c875234350e518395efbf51958523b0852fb2215ab8cb81358f9317153eba2d.css"><meta property='og:title' content="Search">
 <meta property='og:description' content="">
-<meta property='og:url' content='http://localhost:1313/search/'>
+<meta property='og:url' content='https://escaleram.dev/search/'>
 <meta property='og:site_name' content='escaleram.dev'>
 <meta property='og:type' content='article'><meta property='article:section' content='Page' />
 <meta name="twitter:title" content="Search">
-<meta name="twitter:description" content=""><link rel="alternate" type="application/json" href="http://localhost:1313/search/index.json">
+<meta name="twitter:description" content=""><link rel="alternate" type="application/json" href="https://escaleram.dev/search/index.json">
     <link rel="shortcut icon" href="/img/ladder.png" />
 <link rel="preload" href="/search/index.json" as="fetch" crossorigin="anonymous">
     </head>
@@ -198,7 +198,7 @@
     <div id="cliamp-player-container">
   <div class="cliamp-window">
     <div class="cliamp-header">
-      <span class="cliamp-logo">Audio player</span>
+      <span class="cliamp-logo">Press Play Below!</span>
       <span class="cliamp-status" id="player-status">Stopped</span>
     </div>
     
@@ -220,10 +220,14 @@
 
     
     <div class="cliamp-controls">
-      <button id="prev-btn" title="Previous">|&lt;&lt;</button>
-      <button id="play-btn" title="Play">&gt;</button>
-      <button id="pause-btn" title="Pause">||</button>
-      <button id="next-btn" title="Next">&gt;&gt;|</button>
+      <button id="prev-btn" title="Previous">&#9198;</button>
+      <button id="play-btn" title="Play">&#9658;</button>
+      <button id="pause-btn" title="Pause">&#9208;</button>
+      <button id="next-btn" title="Next">&#9197;</button>
+    </div>
+
+    <div class="cliamp-credits">
+      <span>Music provided by mobygratis</span>
     </div>
   </div>
 </div>
@@ -244,6 +248,12 @@
     width: min(330px, 100%);
     padding: 12px;
     color: var(--card-text-color-main);
+  }
+  .cliamp-credits {
+    font-size: 8px;
+    color: var(--card-text-color-secondary);
+    text-align: center;
+    margin-top: 6px;
   }
   .cliamp-header {
     color: var(--card-text-color-main);
@@ -327,7 +337,10 @@
 
 <script>
   const playlistData = [
-    { title: "Royalty Free Electronica", url: "/assets/audio/track1.mp3" }
+    { title: "dog fast", url: "/assets/audio/dog%20fast.mp3" },
+    { title: "guitar open", url: "/assets/audio/guitar%20open.mp3" },
+    { title: "falling out of love", url: "/assets/audio/falling%20out%20of%20love.mp3" }, 
+    { title: "1960s 2 house", url: "/assets/audio/1960s%202%20house.mp3" }
   ];
 
   const playerStateKey = "cliamp-player-state";
@@ -335,6 +348,7 @@
   let audioCtx, analyser, audioSource, sourceNode;
   let currentIndex = 0;
   let isInitialized = false;
+  let isVisualizing = false;
 
   const audioEl = new Audio();
   audioEl.crossOrigin = "anonymous";
@@ -369,9 +383,12 @@
     isInitialized = true;
   }
 
-  function loadTrack(index) {
+  function loadTrack(index, resetTime = true) {
     currentIndex = index;
     audioEl.src = playlistData[currentIndex].url;
+    if (resetTime) {
+      audioEl.currentTime = 0;
+    }
     trackTitleDisplay.textContent = playlistData[currentIndex].title;
     playlistSelect.selectedIndex = currentIndex;
     savePlayerState();
@@ -392,7 +409,9 @@
     audioEl.play().then(() => {
       playerStatus.textContent = "Playing";
       savePlayerState();
-      visualize();
+      if (!isVisualizing) {
+        visualize();
+      }
     }).catch(e => {
       playerStatus.textContent = "Paused";
       console.log("Playback error:", e);
@@ -428,24 +447,35 @@
   });
 
   audioEl.addEventListener('ended', () => {
-    nextBtn.click();
+    currentIndex = (currentIndex + 1) % playlistData.length;
+    loadTrack(currentIndex);
+    startPlayback();
   });
 
+  audioEl.addEventListener('error', (e) => {
+    console.warn("Audio load error on track:", playlistData[currentIndex]?.title, e);
+  });
+
+  
   let savedState = null;
   try {
     savedState = JSON.parse(sessionStorage.getItem(playerStateKey));
   } catch (_) {}
 
-  loadTrack(savedState && Number.isInteger(savedState.index)
+  const initialIndex = savedState && Number.isInteger(savedState.index)
     ? Math.max(0, Math.min(savedState.index, playlistData.length - 1))
-    : 0);
+    : 0;
 
-  audioEl.addEventListener("loadedmetadata", () => {
-    if (savedState && Number.isFinite(savedState.time)) {
+  loadTrack(initialIndex, false);
+
+  if (savedState && Number.isFinite(savedState.time) && savedState.time > 0) {
+    const onInitialLoaded = () => {
       audioEl.currentTime = Math.min(savedState.time, audioEl.duration || savedState.time);
-    }
-    if (savedState && savedState.playing) startPlayback();
-  });
+      if (savedState.playing) startPlayback();
+      audioEl.removeEventListener("loadedmetadata", onInitialLoaded);
+    };
+    audioEl.addEventListener("loadedmetadata", onInitialLoaded);
+  }
 
   audioEl.addEventListener("timeupdate", savePlayerState);
   audioEl.addEventListener("play", savePlayerState);
@@ -453,6 +483,7 @@
   window.addEventListener("beforeunload", savePlayerState);
 
   function visualize() {
+    isVisualizing = true;
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
@@ -613,7 +644,7 @@
             </main>
         </div>
         
-<script type="text/javascript" src="/ts/main.4029ad5778b1230000c7479f5bf5fd557613ac9a850df8acb3fac48cb334ed36.js" defer></script>
+<script type="text/javascript" src="/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
 
 
     </body>

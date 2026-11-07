@@ -198,7 +198,7 @@
     <div id="cliamp-player-container">
   <div class="cliamp-window">
     <div class="cliamp-header">
-      <span class="cliamp-logo">Audio player</span>
+      <span class="cliamp-logo">Press Play Below!</span>
       <span class="cliamp-status" id="player-status">Stopped</span>
     </div>
     
@@ -220,10 +220,14 @@
 
     
     <div class="cliamp-controls">
-      <button id="prev-btn" title="Previous">|&lt;&lt;</button>
-      <button id="play-btn" title="Play">&gt;</button>
-      <button id="pause-btn" title="Pause">||</button>
-      <button id="next-btn" title="Next">&gt;&gt;|</button>
+      <button id="prev-btn" title="Previous">&#9198;</button>
+      <button id="play-btn" title="Play">&#9658;</button>
+      <button id="pause-btn" title="Pause">&#9208;</button>
+      <button id="next-btn" title="Next">&#9197;</button>
+    </div>
+
+    <div class="cliamp-credits">
+      <span>Music provided by mobygratis</span>
     </div>
   </div>
 </div>
@@ -244,6 +248,12 @@
     width: min(330px, 100%);
     padding: 12px;
     color: var(--card-text-color-main);
+  }
+  .cliamp-credits {
+    font-size: 8px;
+    color: var(--card-text-color-secondary);
+    text-align: center;
+    margin-top: 6px;
   }
   .cliamp-header {
     color: var(--card-text-color-main);
@@ -327,7 +337,10 @@
 
 <script>
   const playlistData = [
-    { title: "Royalty Free Electronica", url: "/assets/audio/track1.mp3" }
+    { title: "dog fast", url: "/assets/audio/dog fast.mp3" },
+    { title: "guitar open", url: "/assets/audio/guitar open.mp3" },
+    { title: "falling out of love", url: "/assets/audio/falling out of love.mp3" }, 
+    { title: "1960s 2 house", url: "/assets/audio/1960s 2 house.mp3" }
   ];
 
   const playerStateKey = "cliamp-player-state";
@@ -737,7 +750,7 @@
             </main>
         </div>
         
-<script type="text/javascript" src="/ts/main.4029ad5778b1230000c7479f5bf5fd557613ac9a850df8acb3fac48cb334ed36.js" defer></script>
+<script type="text/javascript" src="/ts/main.4a5a621c399fbf5257975c725d9c222f5fcea3c68fc7e511af01e32174186d31.js" defer></script>
 
 
     </body>
