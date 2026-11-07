@@ -569,7 +569,17 @@
 
                 document.title = parsed.title;
                 if (push) history.pushState({}, "", url);
-                window.scrollTo({ top: 0, behavior: "auto" });
+                
+                if (window.innerWidth < 768) {
+                    setTimeout(() => {
+                        const target = document.querySelector("main.main");
+                        if (target) {
+                            target.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }, 50);
+                } else {
+                    window.scrollTo({ top: 0, behavior: "auto" });
+                }
 
                 document.querySelectorAll("#main-menu a").forEach((link) => {
                     const item = link.closest("li");
@@ -595,6 +605,24 @@
             window.addEventListener("popstate", () => {
                 replacePage(window.location.href, false).catch(() => window.location.reload());
             });
+
+            
+            const scrollInitialMobile = () => {
+                if (window.innerWidth < 768 && window.location.pathname !== "/" && window.location.pathname !== "") {
+                    setTimeout(() => {
+                        const main = document.querySelector("main.main");
+                        if (main) {
+                            main.scrollIntoView({ behavior: "smooth" });
+                        }
+                    }, 100);
+                }
+            };
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", scrollInitialMobile);
+            } else {
+                scrollInitialMobile();
+            }
         })();
     </script>
 </aside>
