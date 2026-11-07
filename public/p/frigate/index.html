@@ -201,7 +201,7 @@
     <div id="cliamp-player-container">
   <div class="cliamp-window">
     <div class="cliamp-header">
-      <span class="cliamp-logo">Press Play Below!</span>
+      <span class="cliamp-logo">Manny's Jukebox</span>
       <span class="cliamp-status" id="player-status">Stopped</span>
     </div>
     
@@ -230,7 +230,11 @@
     </div>
 
     <div class="cliamp-credits">
-      <span>Music provided by mobygratis</span>
+      <span>Music provided by <a href="https://mobygratis.com/">mobygratis</a><sup>1</sup> and <a href="https://freemusicarchive.org/music/vibedepot/">VibeDepot</a><sup>2</sup></span>
+    </div>
+
+    <div class="cliamp-license">
+      <span>Licenses: <a href="https://support.mobygratis.com/article/61-license-agreement">1</a>,<a href="https://creativecommons.org/licenses/by-nd/4.0/">2<a></span>
     </div>
   </div>
 </div>
@@ -256,6 +260,12 @@
     font-size: 8px;
     color: var(--card-text-color-secondary);
     text-align: center;
+    margin-top: 6px;
+  }
+  .cliamp-license {
+    font-size: 6px;
+    color: var(--card-text-color-secondary);
+    text-align: right;
     margin-top: 6px;
   }
   .cliamp-header {
@@ -340,10 +350,12 @@
 
 <script>
   const playlistData = [
-    { title: "dog fast", url: "/assets/audio/dog%20fast.mp3" },
-    { title: "guitar open", url: "/assets/audio/guitar%20open.mp3" },
-    { title: "falling out of love", url: "/assets/audio/falling%20out%20of%20love.mp3" }, 
-    { title: "1960s 2 house", url: "/assets/audio/1960s%202%20house.mp3" }
+    { title: "VibeDepot - Lounge Jazz", url: "/assets/audio/Lounge%20Jazz.mp3" },
+    { title: "VibeDepot - Free Song Jazz", url: "/assets/audio/Free%20Song%20Jazz.mp3" },
+    { title: "mobygratis - dog fast", url: "/assets/audio/dog%20fast.mp3" },
+    { title: "mobygratis - guitar open", url: "/assets/audio/guitar%20open.mp3" },
+    { title: "mobygratis - falling out of love", url: "/assets/audio/falling%20out%20of%20love.mp3" }, 
+    { title: "mobygratis - 1960s 2 house", url: "/assets/audio/1960s%202%20house.mp3" }
   ];
 
   const playerStateKey = "cliamp-player-state";
@@ -925,7 +937,7 @@
     <a href="/p/hello-world/">
         
         <div class="article-image">
-            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/ecoli_hu_4ad06914e2c58cf3.jpg" srcset="/p/hello-world/ecoli_hu_4ad06914e2c58cf3.jpg 1x, /p/hello-world/ecoli_hu_dbd01e312984049f.jpg 2x" width="250">
+            <img alt="Featured image of post Hello World!" height="150" loading="lazy" src="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg" srcset="/p/hello-world/ecoli_hu_be3243dffbc434f2.jpg 1x, /p/hello-world/ecoli_hu_cc49e694064416b1.jpg 2x" width="250">
 
         </div>
         
