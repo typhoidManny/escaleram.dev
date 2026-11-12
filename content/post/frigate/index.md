@@ -25,13 +25,13 @@ toc: true
 
 ## Intro
 
-I've don't love handing over my sensitive data to Big Tech. 
+I don't love handing over my sensitive data to Big Tech. When I considered getting a home surveillance system to watch my cat, I worried about where that data was ending up.
 
-I won't get into that topic today, but it made me think twice when I thought about getting a home surveillance system to spy on my cat (named Fish).
+So I thought why not keep it local.
 
 After a bit of research I found [Frigate NVR](https://frigate.video/) which addressed all my concerns and came with some pretty powerful features to play with.
 
-Below I talk about how I configured Frigate with object detection, face recognition, and more on afforadable hardware! Follow along if your trying to breakup with Big Tech too...
+Below I talk about how I configured Frigate with object detection, face recognition, and more on afforadable hardware!
 
 ## Hardware
 
@@ -61,13 +61,13 @@ Both of these models support RTSP; the C217 also supports pan/tilt features over
 
 </div>
 
-You will want a mid-range PC or a Raspberry Pi to run Frigate. 
+You will want a mid-range PC with a decent GPU or a Raspberry Pi to run Frigate.
 
-I recommend an EdgeTPU if you plan to run object detection. If you dont have one but want to test out detection, you could also configure a dedicated GPU to run a lightweight model.
+Object detection will be best with an AI Coprocessor. If you dont have one but want to test out detection, you could also configure a dedicated GPU to run a lightweight model.
 
 I'm using the Google Coral TPU USB Accelerator (Amazon - ~$100) to run my object detection. This is only one option of many. See [Frigate](https://docs.frigate.video/configuration/object_detectors) docs for more.
 
-My GPU is an NVIDIA GeForce RTX 2060 purchased nearly 10 years ago. This can be used to run lightweight object detection models, but im only using it for processing the footage.
+My GPU is an NVIDIA GeForce RTX 2060 purchased nearly 10 years ago. All I need it for is rendering the camera stream, but it handles lightweight AI models just fine through the [ONNX](https://docs.frigate.video/configuration/object_detectors/#onnx) format.
 
 <div style="text-align: center">
 
@@ -83,11 +83,26 @@ Total cost for cameras and AI Coprocessor: **$210.00**
 
 </div>
 
-Frigate runs on [Docker](https://docs.docker.com/get-started/docker-overview/). Some experience will go a long way, but it's doable for a beginner and Frigate has good [docs here](https://docs.frigate.video/frigate/installation/#docker) as well. 
+#### Docker
 
-I have yet to try Windows or MacOS. My flavor of Linux is CachyOS.
+Frigate runs on [Docker](https://docs.docker.com/get-started/docker-overview/). Some experience here will go a long way, but it's doable for a beginner and Frigate thorough [documentation(https://docs.frigate.video/frigate/installation/#docker).
 
+Make sure you're comfortable with creating containers with a docker-compose.yaml config file, bind mounting, port mapping, and reading the build time logs. These skills will be helpful if things go south.
+
+#### Operating System
+
+My flavor of Linux is CachyOS. I find Linux a bit more compatible with Docker, but I've also spun up Frigate containers in Windows no problem. 
 ![CachyOS](./cachy.png)
+
+#### Tailscale
+
+Spinning up a container on your home PC is great for keeping your data local, but it's not very useful if you can't deploy outside your home network.
+
+That's where [Tailscale](https://tailscale.com/docs/concepts/what-is-tailscale) comes in!
+
+The use for Tailscale in this context is to set up a private network (Tailnet) where we can control who gets in through a convenient desktop or mobile app. That way I can route my home network traffic through a [Zero Trust](https://tailscale.com/docs/concepts/zero-trust) connectivity platform to devices pretty much anywhere.
+
+I won't bother going over set up of Tailscale; it's quite painless. Just make sure you read up on security and understand the risk.
 
 <div style="text-align: center">
 
@@ -127,7 +142,7 @@ The quality of your object detections is going to be dependent on a few key para
     - Input Resolution
     - Variant Size (if using YOLOv9 models)
 
-I am using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.
+I'm using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.
 
 320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
 
