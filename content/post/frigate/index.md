@@ -94,15 +94,19 @@ Make sure you're comfortable with creating containers with a docker-compose.yaml
 My flavor of Linux is CachyOS. I find Linux a bit more compatible with Docker, but I've also spun up Frigate containers in Windows no problem. 
 ![CachyOS](./cachy.png)
 
+#### Storage
+
+You're gonna want a good amount of storage reserved for the detections and recordings. It all depends on what you choose to record/detect. I have 500GB reserved, but I only save recordings for 72 hours so I rarely cross 200GB of utilization.e
+
 #### Tailscale
 
 Spinning up a container on your home PC is great for keeping your data local, but it's not very useful if you can't deploy outside your home network.
 
 That's where [Tailscale](https://tailscale.com/docs/concepts/what-is-tailscale) comes in!
 
-The use for Tailscale in this context is to set up a private network (Tailnet) where we can control who gets in through a convenient desktop or mobile app. That way I can route my home network traffic through a [Zero Trust](https://tailscale.com/docs/concepts/zero-trust) connectivity platform to devices pretty much anywhere.
+Tailscale lets me set up a private network, aka [Tailnet](https://tailscale.com/docs/concepts/tailnet), where I can control who gets in through a convenient desktop or mobile app. That way I can route my home network traffic through a [Zero Trust](https://tailscale.com/docs/concepts/zero-trust) connectivity platform to devices pretty much anywhere.
 
-I won't bother going over set up of Tailscale; it's quite painless. Just make sure you read up on security and understand the risk.
+I won't bother going over set up of Tailscale; it's quite painless. Just make sure you read up on [security](https://tailscale.com/docs/reference/best-practices/security) and understand the risks.
 
 <div style="text-align: center">
 
@@ -110,19 +114,23 @@ I won't bother going over set up of Tailscale; it's quite painless. Just make su
 
 </div>
 
-The Tapo cameras require you to create an account for setup. Upon initial setup, the cameras are configured to stream directly to TP-Links proprietary cloud platform. This is something I wanted to avoid in favor of using RTSP to receive streams locally and preventing the cameras from directly accessing the internet.
+The Tapo cameras require you to create an account for setup. After the initial setup, the cameras stream directly to TP-Links proprietary cloud platform. 
 
-**NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers.** 
+Disgusting behavior, in my opinion. 
 
-You must first create a TP-Link account to boot the cameras, create an RTSP stream account for each camera, then configure a static IP for each camera. 
+I opted to configure RTSP streams and route them locally, while preventing the cameras from directly accessing the internet.
 
-In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate. 
+**NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers. If it were up to me this would be a toggle switch.** 
+
+then configure . 
+
+In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a a static IP for each camera and a bad gateway after setting up the RTSP streams in Frigate. 
 
 ![Gateway Configuration](./Gateway.jpg)
 
-**This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.**
+**Configuring a bad IP will immediately kick the cameras "offline", but you can keep tapping into the RTSP streams.**
 
-Now you have camera streams over WiFi, and the data never leaves your network!
+Now you have camera streams a wireless camera stream, and the data stays right on your network!
 
 <div style="text-align: center">
 
@@ -142,11 +150,11 @@ The quality of your object detections is going to be dependent on a few key para
     - Input Resolution
     - Variant Size (if using YOLOv9 models)
 
-I'm using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.
+I'm using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, [but this is not the case](https://docs.frigate.video/configuration/object_detectors/#choosing-a-model-size).
 
 320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
 
-Once you've configured motion detection and object detection, Frigate will start handing over detections to review.
+Once you've configured motion detection and object detection, Frigate will start handing over detections for review.
 
 The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.
 

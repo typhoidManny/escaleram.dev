@@ -21,6 +21,7 @@
 <meta name="twitter:description" content="Local AI Surveillance with Frigate."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://escaleram.dev/p/frigate/frigateScreenshot.jpg' />
     <link rel="shortcut icon" href="/img/ladder.png" />
+<link rel="stylesheet" href="/css/custom.min.47b5fddebc078a7ce145961bb0017d00297142de4fbedb9e9bb6dd901608e4f1.css">
 
     </head>
     <body class="
@@ -678,6 +679,7 @@
           <ol>
             <li><a href="#docker">Docker</a></li>
             <li><a href="#operating-system">Operating System</a></li>
+            <li><a href="#storage">Storage</a></li>
             <li><a href="#tailscale">Tailscale</a></li>
           </ol>
         </li>
@@ -808,6 +810,7 @@
           <ol>
             <li><a href="#docker">Docker</a></li>
             <li><a href="#operating-system">Operating System</a></li>
+            <li><a href="#storage">Storage</a></li>
             <li><a href="#tailscale">Tailscale</a></li>
           </ol>
         </li>
@@ -872,28 +875,35 @@
 </h3></div>
 <h4 id="docker">Docker
 </h4><p>Frigate runs on <a class="link" href="https://docs.docker.com/get-started/docker-overview/"  target="_blank" rel="noopener"
-    >Docker</a>. Some experience here will go a long way, but it&rsquo;s doable for a beginner and Frigate thorough [documentation(https://docs.frigate.video/frigate/installation/#docker).</p>
+    >Docker</a>. Some experience here will go a long way, but it&rsquo;s doable for a beginner and Frigate thorough <a class="link" href="https://docs.frigate.video/frigate/installation/#docker"  target="_blank" rel="noopener"
+    >documentation</a>.</p>
 <p>Make sure you&rsquo;re comfortable with creating containers with a docker-compose.yaml config file, bind mounting, port mapping, and reading the build time logs. These skills will be helpful if things go south.</p>
 <h4 id="operating-system">Operating System
 </h4><p>My flavor of Linux is CachyOS. I find Linux a bit more compatible with Docker, but I&rsquo;ve also spun up Frigate containers in Windows no problem.
 <img alt="CachyOS" class="gallery-image" data-flex-basis="261px" data-flex-grow="108" height="459" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/cachy.png" width="500"></p>
+<h4 id="storage">Storage
+</h4><p>You&rsquo;re gonna want a good amount of storage reserved for the detections and recordings. It all depends on what you choose to record/detect. I have 500GB reserved, but I only save recordings for 72 hours so I rarely cross 200GB of utilization.e</p>
 <h4 id="tailscale">Tailscale
 </h4><p>Spinning up a container on your home PC is great for keeping your data local, but it&rsquo;s not very useful if you can&rsquo;t deploy outside your home network.</p>
 <p>That&rsquo;s where <a class="link" href="https://tailscale.com/docs/concepts/what-is-tailscale"  target="_blank" rel="noopener"
     >Tailscale</a> comes in!</p>
-<p>The use for Tailscale in this context is to set up a private network (Tailnet) where we can control who gets in through a convenient desktop or mobile app. That way I can route my home network traffic through a <a class="link" href="https://tailscale.com/docs/concepts/zero-trust"  target="_blank" rel="noopener"
+<p>Tailscale lets me set up a private network, aka <a class="link" href="https://tailscale.com/docs/concepts/tailnet"  target="_blank" rel="noopener"
+    >Tailnet</a>, where I can control who gets in through a convenient desktop or mobile app. That way I can route my home network traffic through a <a class="link" href="https://tailscale.com/docs/concepts/zero-trust"  target="_blank" rel="noopener"
     >Zero Trust</a> connectivity platform to devices pretty much anywhere.</p>
-<p>I won&rsquo;t bother going over set up of Tailscale; it&rsquo;s quite painless. Just make sure you read up on security and understand the risk.</p>
+<p>I won&rsquo;t bother going over set up of Tailscale; it&rsquo;s quite painless. Just make sure you read up on <a class="link" href="https://tailscale.com/docs/reference/best-practices/security"  target="_blank" rel="noopener"
+    >security</a> and understand the risks.</p>
 <div style="text-align: center">
 <h3 id="cameras-1">Cameras
 </h3></div>
-<p>The Tapo cameras require you to create an account for setup. Upon initial setup, the cameras are configured to stream directly to TP-Links proprietary cloud platform. This is something I wanted to avoid in favor of using RTSP to receive streams locally and preventing the cameras from directly accessing the internet.</p>
-<p><strong>NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers.</strong></p>
-<p>You must first create a TP-Link account to boot the cameras, create an RTSP stream account for each camera, then configure a static IP for each camera.</p>
-<p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a bad gateway after setting up the streams in Frigate.</p>
+<p>The Tapo cameras require you to create an account for setup. After the initial setup, the cameras stream directly to TP-Links proprietary cloud platform.</p>
+<p>Disgusting behavior, in my opinion.</p>
+<p>I opted to configure RTSP streams and route them locally, while preventing the cameras from directly accessing the internet.</p>
+<p><strong>NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers. If it were up to me this would be a toggle switch.</strong></p>
+<p>then configure .</p>
+<p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a a static IP for each camera and a bad gateway after setting up the RTSP streams in Frigate.</p>
 <p><img alt="Gateway Configuration" class="gallery-image" data-flex-basis="110px" data-flex-grow="46" height="3120" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/Gateway.jpg" srcset="/p/frigate/Gateway_hu_9834475944033db6.jpg 800w, /p/frigate/Gateway.jpg 1440w" width="1440"></p>
-<p><strong>This will immediately kick the cameras offline according to the Tapo app, but you can keep tapping into the RTSP streams.</strong></p>
-<p>Now you have camera streams over WiFi, and the data never leaves your network!</p>
+<p><strong>Configuring a bad IP will immediately kick the cameras &ldquo;offline&rdquo;, but you can keep tapping into the RTSP streams.</strong></p>
+<p>Now you have camera streams a wireless camera stream, and the data stays right on your network!</p>
 <div style="text-align: center">
 <h3 id="object-detection">Object Detection
 </h3></div>
@@ -905,9 +915,10 @@
 - Input Resolution
 - Variant Size (if using YOLOv9 models)
 </code></pre>
-<p>I&rsquo;m using the <em>small</em> variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, but this is not the case.</p>
+<p>I&rsquo;m using the <em>small</em> variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, <a class="link" href="https://docs.frigate.video/configuration/object_detectors/#choosing-a-model-size"  target="_blank" rel="noopener"
+    >but this is not the case</a>.</p>
 <p>320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.</p>
-<p>Once you&rsquo;ve configured motion detection and object detection, Frigate will start handing over detections to review.</p>
+<p>Once you&rsquo;ve configured motion detection and object detection, Frigate will start handing over detections for review.</p>
 <p>The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.</p>
 <h3 id="semantic-search">Semantic Search
 </h3><p>One of the coolest features available on Frigate is Semantic Search.</p>

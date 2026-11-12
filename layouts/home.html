@@ -1,0 +1,28 @@
+{{ define "main" }}
+    {{ with .Content }}
+        <aside class="under-construction-banner" role="status">
+            <div class="under-construction-banner__message">{{ . }}</div>
+            <button class="under-construction-banner__dismiss" type="button" aria-label="Dismiss under construction message">×</button>
+        </aside>
+        <script>
+            document.querySelector(".under-construction-banner__dismiss")?.addEventListener("click", (event) => {
+                event.currentTarget.closest(".under-construction-banner").remove();
+            });
+        </script>
+    {{ end }}
+
+    {{- $paginator := partial "helper/paginator.html" . -}}
+
+    <section class="article-list">
+        {{ range $index, $element := $paginator.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}
