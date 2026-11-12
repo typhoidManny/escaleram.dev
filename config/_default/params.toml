@@ -22,7 +22,7 @@ SortBy              = "default"
 
 [sidebar]
     emoji    = "💻"
-    subtitle = "Microbiology Instrumentation Specialist | CS Student"
+    subtitle = "Instrumentation Specialist (Microbiology)| Computer Science Student"
     avatar   = "img/escaleram.png"
         enabled = true
         local = true
