@@ -85,7 +85,7 @@ Total cost for cameras and AI Coprocessor: **$210.00**
 
 #### Docker
 
-Frigate runs on [Docker](https://docs.docker.com/get-started/docker-overview/). Some experience here will go a long way, but it's doable for a beginner and Frigate thorough [documentation(https://docs.frigate.video/frigate/installation/#docker).
+Frigate runs on [Docker](https://docs.docker.com/get-started/docker-overview/). Some experience here will go a long way, but it's doable for a beginner and Frigate thorough [documentation](https://docs.frigate.video/frigate/installation/#docker).
 
 Make sure you're comfortable with creating containers with a docker-compose.yaml config file, bind mounting, port mapping, and reading the build time logs. These skills will be helpful if things go south.
 
