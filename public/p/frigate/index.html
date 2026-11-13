@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Local AI Surveillance with Frigate."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://escaleram.dev/p/frigate/frigateScreenshot.jpg' />
     <link rel="shortcut icon" href="/img/ladder.png" />
-<link rel="stylesheet" href="/css/custom.min.47b5fddebc078a7ce145961bb0017d00297142de4fbedb9e9bb6dd901608e4f1.css">
+<link rel="stylesheet" href="/css/custom.min.367e03514cb466cfb02d440dcad6e5386d3f0f7d32df525822b7790e64a9caf2.css">
 
     </head>
     <body class="
@@ -76,29 +76,9 @@
             <h1 class="site-name"><a href="/">escaleram.dev</a></h1>
             <h2 class="site-description">🥼🛠️🔬 | 🖥️🧠💾</h2>
         </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a
-                        href='https://github.com/typhoidManny'
-                        
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
+    </header>
 
-
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
+    <ol class="menu" id="main-menu">
         
         
         
@@ -173,28 +153,6 @@
         
         <li class="menu-bottom-section">
             <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>Dark Mode</span>
-                    </li>
-                
             </ol>
         </li>
     </ol>
@@ -281,10 +239,19 @@
   }
   .cliamp-screen {
     background-color: var(--body-background);
-    border: 1px solid var(--card-separator-color);
+    border: 0 solid var(--card-separator-color);
     border-radius: calc(var(--card-border-radius) - 4px);
-    margin-bottom: 8px;
+    max-height: 0;
+    margin-bottom: 0;
     overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, margin-bottom 0.3s ease, opacity 0.2s ease, border-width 0.3s ease;
+  }
+  .cliamp-window.is-playing .cliamp-screen {
+    max-height: 100px;
+    border-width: 1px;
+    margin-bottom: 8px;
+    opacity: 1;
   }
   canvas {
     display: block;
@@ -378,6 +345,20 @@
   const playerStatus = document.getElementById('player-status');
   const canvas = document.getElementById('visualizerCanvas');
   const canvasCtx = canvas.getContext('2d');
+  const playerWindow = document.querySelector('.cliamp-window');
+
+  audioEl.addEventListener('playing', () => {
+    playerWindow.classList.add('is-playing');
+  });
+  audioEl.addEventListener('pause', () => {
+    playerWindow.classList.remove('is-playing');
+  });
+  audioEl.addEventListener('ended', () => {
+    playerWindow.classList.remove('is-playing');
+  });
+  audioEl.addEventListener('error', () => {
+    playerWindow.classList.remove('is-playing');
+  });
 
   playlistData.forEach((track, index) => {
     const opt = document.createElement('option');
@@ -429,6 +410,7 @@
         visualize();
       }
     }).catch(e => {
+      playerWindow.classList.remove('is-playing');
       playerStatus.textContent = "Paused";
       console.log("Playback error:", e);
     });
@@ -529,6 +511,51 @@
   }
 </script>
 
+
+    
+        <ol class="menu-social">
+            
+                <li>
+                    <a
+                        href='https://github.com/typhoidManny'
+                        
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                    </a>
+                </li>
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </ol>
+    
 
     <script>
         (() => {
@@ -770,7 +797,7 @@
 
 
                     <time class="article-time--reading">
-                        5 minutes read
+                        6 minutes read
                     </time>
                 
             </div>
@@ -879,7 +906,8 @@
     >documentation</a>.</p>
 <p>Make sure you&rsquo;re comfortable with creating containers with a docker-compose.yaml config file, bind mounting, port mapping, and reading the build time logs. These skills will be helpful if things go south.</p>
 <h4 id="operating-system">Operating System
-</h4><p>My flavor of Linux is CachyOS. I find Linux a bit more compatible with Docker, but I&rsquo;ve also spun up Frigate containers in Windows no problem.
+</h4><p>My flavor of Linux is <a class="link" href="https://cachyos.org/about/"  target="_blank" rel="noopener"
+    >CachyOS</a>. I find Linux a bit more compatible with Docker, but I&rsquo;ve also spun up Frigate containers in Windows no problem.
 <img alt="CachyOS" class="gallery-image" data-flex-basis="261px" data-flex-grow="108" height="459" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/cachy.png" width="500"></p>
 <h4 id="storage">Storage
 </h4><p>You&rsquo;re gonna want a good amount of storage reserved for the detections and recordings. It all depends on what you choose to record/detect. I have 500GB reserved, but I only save recordings for 72 hours so I rarely cross 200GB of utilization.e</p>
@@ -896,11 +924,10 @@
 <h3 id="cameras-1">Cameras
 </h3></div>
 <p>The Tapo cameras require you to create an account for setup. After the initial setup, the cameras stream directly to TP-Links proprietary cloud platform.</p>
-<p>Disgusting behavior, in my opinion.</p>
+<p>I dont love that&hellip;</p>
 <p>I opted to configure RTSP streams and route them locally, while preventing the cameras from directly accessing the internet.</p>
 <p><strong>NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers. If it were up to me this would be a toggle switch.</strong></p>
-<p>then configure .</p>
-<p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a a static IP for each camera and a bad gateway after setting up the RTSP streams in Frigate.</p>
+<p>In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a static IP and a bad gateway. You should do so only after you&rsquo;ve set up the RTSP streams in Frigate.</p>
 <p><img alt="Gateway Configuration" class="gallery-image" data-flex-basis="110px" data-flex-grow="46" height="3120" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/Gateway.jpg" srcset="/p/frigate/Gateway_hu_9834475944033db6.jpg 800w, /p/frigate/Gateway.jpg 1440w" width="1440"></p>
 <p><strong>Configuring a bad IP will immediately kick the cameras &ldquo;offline&rdquo;, but you can keep tapping into the RTSP streams.</strong></p>
 <p>Now you have camera streams a wireless camera stream, and the data stays right on your network!</p>
@@ -917,24 +944,31 @@
 </code></pre>
 <p>I&rsquo;m using the <em>small</em> variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, <a class="link" href="https://docs.frigate.video/configuration/object_detectors/#choosing-a-model-size"  target="_blank" rel="noopener"
     >but this is not the case</a>.</p>
-<p>320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.</p>
+<p>320x320 is better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the camera resolution is increased.</p>
 <p>Once you&rsquo;ve configured motion detection and object detection, Frigate will start handing over detections for review.</p>
-<p>The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.</p>
+<p>The categories of object Frigate will shows depend on a few things:
+- Limitations of your model
+- The labels file (provides annotations)
+- What you configure Frigate to show you</p>
 <h3 id="semantic-search">Semantic Search
-</h3><p>One of the coolest features available on Frigate is Semantic Search.</p>
-<p>This feature takes object detections and runs them through another Local AI model (from Jina AI) which gives the images <em>embeddings</em>. These <em>embeddings</em> provide text descriptions of the image to group relevant images together.</p>
-<p>From there, you can search through your database of detections based on the <em>embeddings</em>&hellip;</p>
-<p>For example, here I search my detection database for the term &ldquo;white shirt&rdquo;:</p>
+</h3><p>One of my favorite features available on Frigate is Semantic Search.</p>
+<p>This feature takes object detections and runs them through another Local AI model from Jina AI, <a class="link" href="https://huggingface.co/jinaai/jina-clip-v1#intended-usage--model-info"  target="_blank" rel="noopener"
+    >jina-clip-v1</a>, which adds embeddings to your detections. A more digestable blog post on the model lives <a class="link" href="https://jina.ai/news/jina-clip-v1-a-truly-multimodal-embeddings-model-for-text-and-image/"  target="_blank" rel="noopener"
+    >here</a>.</p>
+<p>You should also check out this awesome <a class="link" href="https://www.youtube.com/watch?v=rw1YfQQttfo"  target="_blank" rel="noopener"
+    >video on embeddings</a> to learn more.</p>
+<p>jina-clip-v1 embeds both images and text into the same embedding space, which basically means I can do text→image and image→image search on my detections. For example, here I search my detection database for the term &ldquo;white shirt&rdquo;:</p>
 <p><img alt="Semantic Search" class="gallery-image" data-flex-basis="153px" data-flex-grow="63" height="2247" loading="lazy" sizes="(max-width: 767px) calc(100vw - 30px), (max-width: 1023px) 700px, (max-width: 1279px) 950px, 1232px" src="/p/frigate/SemanticSearch.jpg" srcset="/p/frigate/SemanticSearch_hu_c48d0985f9537f8f.jpg 800w, /p/frigate/SemanticSearch.jpg 1438w" width="1438"></p>
-<p>Just think of the possibilities!</p>
+<p>Pretty cool, right? Another feature let&rsquo;s me quickly compare a current detection to the database of historical detections (image→image).</p>
 <h3 id="face-recognition">Face Recognition
-</h3><p>Setting up facial recognition is very intuitive. Simply add some clear images of the subjects face and Frigate will start classifying people detected with sub_labels based on their face.</p>
+</h3><p>Setting up facial recognition is super intuitive. Simply add some clear images of the subjects face and Frigate will start classifying people detected with sub_labels based on their face.</p>
 <p>You can also train these facial detections easily and directly in the user interface. It is crucial you train based on a set of high quality images with diverse lighting, orientation, etc.</p>
 <p>Training on a poor dataset will quickly degrade the quality of your classifications.</p>
 <p>You also want to avoid training on images that were already classified with a relatively high score. This could lead to overfitting.</p>
 <h2 id="outro">Outro
 </h2><p>So that&rsquo;s a brief write-up on how I&rsquo;m using Frigate. There are still plenty of features I want to try out (object states, zones, license plate recognition, and more).</p>
 <p>If I get the sense enough people care I may end up creating a full tutorial and sharing my anonymized configuration file and Docker Compose file.</p>
+<p>I want more people I know to get into this. I&rsquo;d like some nerds to talk this stuff over with!</p>
 <div style="text-align: center">
 <p><em>&rsquo;til next time!</em></p>
 </div>

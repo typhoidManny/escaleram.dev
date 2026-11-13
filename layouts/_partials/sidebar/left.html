@@ -29,26 +29,6 @@
         </div>
     </header>
 
-    {{- with .Site.Menus.social -}}
-        <ol class="menu-social">
-            {{ range . }}
-                <li>
-                    <a
-                        href='{{ .URL }}'
-                        {{ if .Params.newTab }}target="_blank"{{ end }}
-                        {{ with .Name }}title="{{ . }}"{{ end }}
-                        rel="me"
-                    >
-                        {{ $icon := default "link" .Params.Icon }}
-                        {{ with $icon }}
-                            {{ partial "helper/icon" . }}
-                        {{ end }}
-                    </a>
-                </li>
-            {{ end }}
-        </ol>
-    {{- end -}}
-
     <ol class="menu" id="main-menu">
         {{ $currentPage := . }}
         {{ range .Site.Menus.main }}
@@ -81,19 +61,36 @@
                         </select>
                     </li>
                 {{ end }}
-
-                {{ if .Site.Params.colorScheme.toggle }}
-                    <li id="dark-mode-toggle">
-                        {{ partial "helper/icon" "toggle-left" }}
-                        {{ partial "helper/icon" "toggle-right" }}
-                        <span>{{ T "darkMode" }}</span>
-                    </li>
-                {{ end }}
             </ol>
         </li>
     </ol>
 
     {{ .Site.Home.RenderString "{{< visualizer >}}" }}
+
+    {{ if or .Site.Menus.social .Site.Params.colorScheme.toggle }}
+        <ol class="menu-social">
+            {{ range .Site.Menus.social }}
+                <li>
+                    <a
+                        href='{{ .URL }}'
+                        {{ if .Params.newTab }}target="_blank"{{ end }}
+                        {{ with .Name }}title="{{ . }}"{{ end }}
+                        rel="me"
+                    >
+                        {{ $icon := default "link" .Params.Icon }}
+                        {{ partial "helper/icon" $icon }}
+                    </a>
+                </li>
+            {{ end }}
+            {{ if .Site.Params.colorScheme.toggle }}
+                <li id="dark-mode-toggle">
+                    {{ partial "helper/icon" "toggle-left" }}
+                    {{ partial "helper/icon" "toggle-right" }}
+                    <span>{{ T "darkMode" }}</span>
+                </li>
+            {{ end }}
+        </ol>
+    {{ end }}
 
     <script>
         (() => {

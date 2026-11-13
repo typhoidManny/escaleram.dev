@@ -36,3 +36,19 @@
 .under-construction-banner__dismiss:focus-visible {
     background: var(--alert-warning-background);
 }
+
+@media (min-width: 768px) {
+    .left-sidebar {
+        padding-bottom: 10px;
+    }
+
+    .left-sidebar > #cliamp-player-container {
+        margin-top: auto;
+        margin-bottom: calc(10px - var(--sidebar-element-separation));
+    }
+}
+
+.menu-social #dark-mode-toggle {
+    gap: var(--spacing-xs);
+    margin-top: 0;
+}

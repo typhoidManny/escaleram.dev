@@ -80,10 +80,19 @@
   }
   .cliamp-screen {
     background-color: var(--body-background);
-    border: 1px solid var(--card-separator-color);
+    border: 0 solid var(--card-separator-color);
     border-radius: calc(var(--card-border-radius) - 4px);
-    margin-bottom: 8px;
+    max-height: 0;
+    margin-bottom: 0;
     overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, margin-bottom 0.3s ease, opacity 0.2s ease, border-width 0.3s ease;
+  }
+  .cliamp-window.is-playing .cliamp-screen {
+    max-height: 100px;
+    border-width: 1px;
+    margin-bottom: 8px;
+    opacity: 1;
   }
   canvas {
     display: block;
@@ -177,6 +186,20 @@
   const playerStatus = document.getElementById('player-status');
   const canvas = document.getElementById('visualizerCanvas');
   const canvasCtx = canvas.getContext('2d');
+  const playerWindow = document.querySelector('.cliamp-window');
+
+  audioEl.addEventListener('playing', () => {
+    playerWindow.classList.add('is-playing');
+  });
+  audioEl.addEventListener('pause', () => {
+    playerWindow.classList.remove('is-playing');
+  });
+  audioEl.addEventListener('ended', () => {
+    playerWindow.classList.remove('is-playing');
+  });
+  audioEl.addEventListener('error', () => {
+    playerWindow.classList.remove('is-playing');
+  });
 
   playlistData.forEach((track, index) => {
     const opt = document.createElement('option');
@@ -228,6 +251,7 @@
         visualize();
       }
     }).catch(e => {
+      playerWindow.classList.remove('is-playing');
       playerStatus.textContent = "Paused";
       console.log("Playback error:", e);
     });

@@ -91,7 +91,7 @@ Make sure you're comfortable with creating containers with a docker-compose.yaml
 
 #### Operating System
 
-My flavor of Linux is CachyOS. I find Linux a bit more compatible with Docker, but I've also spun up Frigate containers in Windows no problem. 
+My flavor of Linux is [CachyOS](https://cachyos.org/about/). I find Linux a bit more compatible with Docker, but I've also spun up Frigate containers in Windows no problem. 
 ![CachyOS](./cachy.png)
 
 #### Storage
@@ -116,15 +116,13 @@ I won't bother going over set up of Tailscale; it's quite painless. Just make su
 
 The Tapo cameras require you to create an account for setup. After the initial setup, the cameras stream directly to TP-Links proprietary cloud platform. 
 
-Disgusting behavior, in my opinion. 
+I dont love that... 
 
 I opted to configure RTSP streams and route them locally, while preventing the cameras from directly accessing the internet.
 
 **NOTE: TP-Link does not make it easy to keep the camera streams isolated from external servers. If it were up to me this would be a toggle switch.** 
 
-then configure . 
-
-In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a a static IP for each camera and a bad gateway after setting up the RTSP streams in Frigate. 
+In order to prevent camera streams from reaching Tapo servers, you must configure each camera with a static IP and a bad gateway. You should do so only after you've set up the RTSP streams in Frigate. 
 
 ![Gateway Configuration](./Gateway.jpg)
 
@@ -152,29 +150,32 @@ The quality of your object detections is going to be dependent on a few key para
 
 I'm using the *small* variant of YOLOv9 with an input resolution of 320x320. You might think running larger input resolution would produce better results, [but this is not the case](https://docs.frigate.video/configuration/object_detectors/#choosing-a-model-size).
 
-320x320 actually has a better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the resolution is increased.
+320x320 is better shot at detecting small objects than a 640x640 input; the model is only able to fit more objects into a single detection if the camera resolution is increased.
 
 Once you've configured motion detection and object detection, Frigate will start handing over detections for review.
 
-The categories of object Frigate will show you depend on what your model choice is capable of, the labels file you hand over to your model, and what you have configured Frigate to show you.
+The categories of object Frigate will shows depend on a few things:
+    - Limitations of your model 
+    - The labels file (provides annotations)
+    - What you configure Frigate to show you
 
 ### Semantic Search
 
-One of the coolest features available on Frigate is Semantic Search.
+One of my favorite features available on Frigate is Semantic Search.
 
-This feature takes object detections and runs them through another Local AI model (from Jina AI) which gives the images *embeddings*. These *embeddings* provide text descriptions of the image to group relevant images together.
+This feature takes object detections and runs them through another Local AI model from Jina AI, [jina-clip-v1](https://huggingface.co/jinaai/jina-clip-v1#intended-usage--model-info), which adds embeddings to your detections. A more digestable blog post on the model lives [here](https://jina.ai/news/jina-clip-v1-a-truly-multimodal-embeddings-model-for-text-and-image/).
 
-From there, you can search through your database of detections based on the *embeddings*...
+You should also check out this awesome [video on embeddings](https://www.youtube.com/watch?v=rw1YfQQttfo) to learn more.
 
-For example, here I search my detection database for the term "white shirt":
+jina-clip-v1 embeds both images and text into the same embedding space, which basically means I can do text→image and image→image search on my detections. For example, here I search my detection database for the term "white shirt":
 
 ![Semantic Search](./SemanticSearch.jpg)
 
-Just think of the possibilities!
+Pretty cool, right? Another feature let's me quickly compare a current detection to the database of historical detections (image→image). 
 
 ### Face Recognition
 
-Setting up facial recognition is very intuitive. Simply add some clear images of the subjects face and Frigate will start classifying people detected with sub_labels based on their face.
+Setting up facial recognition is super intuitive. Simply add some clear images of the subjects face and Frigate will start classifying people detected with sub_labels based on their face.
 
 You can also train these facial detections easily and directly in the user interface. It is crucial you train based on a set of high quality images with diverse lighting, orientation, etc.
 
@@ -187,6 +188,8 @@ You also want to avoid training on images that were already classified with a re
 So that's a brief write-up on how I'm using Frigate. There are still plenty of features I want to try out (object states, zones, license plate recognition, and more).
 
 If I get the sense enough people care I may end up creating a full tutorial and sharing my anonymized configuration file and Docker Compose file.
+
+I want more people I know to get into this. I'd like some nerds to talk this stuff over with!
 
 <div style="text-align: center">
 
